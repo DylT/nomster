@@ -1,4 +1,7 @@
 class PlacesController < ApplicationController
+  #requires a user to be logged in before the new and create functions
+  #can be called
+  before_action :authenticate_user!, only: [:new, :create]
 
   def index
     #@places = Place.all    Replaced with pagination
@@ -10,7 +13,7 @@ class PlacesController < ApplicationController
   end
 
   def create
-    Place.create(place_params)
+    current_user.places.create(place_params)
     redirect_to root_path
   end
 
